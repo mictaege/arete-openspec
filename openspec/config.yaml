@@ -1,32 +1,32 @@
 schema: spec-driven
 
-# Project context (optional)
-# Add only constraints that should guide OpenSpec artifacts and workflows.
-# Include constraints an agent cannot infer by reading the code.
-# Keep general project documentation and discoverable codebase facts out.
-# Example:
-#   context: |
-#     Designs and tasks must cover Windows, macOS, and Linux
-#     Write all artifacts in Spanish
+context: |
+  Store for the arete family — three GitHub repos under github.com/mictaege, developed together
+  on branch `develop` and released together from `release/YYYY.N` branches (merged to `master`
+  and tagged, e.g. 2026.8):
 
-# Per-artifact rules (optional)
-# Add custom rules for specific artifacts.
-# Example:
-#   rules:
-#     proposal:
-#       - Keep proposals under 500 words
-#       - Always state what is out of scope
-#     tasks:
-#       - Break tasks into chunks of max 2 hours
+    - ~/projects/arete            core library: JUnit 6 BDD extension (@Spec/@Scenario/...),
+                                   Java, published to Maven Central as io.github.mictaege:arete
+    - ~/projects/arete-gradle     Gradle reporting plugin for arete specs, Kotlin, published to
+                                   Maven Central (io.github.mictaege:arete-gradle) and the Gradle
+                                   Plugin Portal (io.github.mictaege.arete)
+    - ~/projects/arete-gradle-test sample/integration consumer (travel_agency demo specs);
+                                   NOT published; includes ../arete and ../arete-gradle via
+                                   includeBuild (settings.gradle.kts), so plugin/core changes are
+                                   exercised end-to-end locally without publishing
 
-# Per-operation guidance (optional)
-# Add advisory guidance for how apply and archive work should be conducted.
-# This is separate from artifact rules above.
-# Example:
-#   operations:
-#     apply:
-#       guidance:
-#         - Keep test summaries concise
-#     archive:
-#       guidance:
-#         - Summarize the archive outcome before finishing
+  Shared conventions (also in ~/.vibe/AGENTS.md and each repo's AGENTS.md / openspec context):
+  - Build/test only via each repo's Gradle wrapper (./gradlew); JUnit Jupiter is the test
+    framework; package roots start with com.github...; license Apache-2.0 everywhere.
+  - Publishing via org.jreleaser (Maven Central, group io.github.mictaege) and
+    com.gradle.plugin-publish for the plugin; credentials come from Gradle properties/env,
+    never hardcoded or committed.
+  - All three repos share one version number per release.
+  - Dependency direction is arete <- arete-gradle <- arete-gradle-test; arete's public annotation
+    API is compatibility-sensitive because arete-gradle reads it to build reports.
+
+  How to work with this store: run OpenSpec commands with `--store arete` for family-wide
+  planning (e.g. `openspec list --store arete`, `openspec new change <id> --store arete`,
+  `openspec doctor --store arete`). Per-repo roots stay authoritative for repo-local work;
+  cross-repo features get a same-named change in each affected repo (or in this store) and are
+  archived together at release time. Family architecture: openspec/specs/family/spec.md.
