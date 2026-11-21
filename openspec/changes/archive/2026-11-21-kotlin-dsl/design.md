@@ -41,6 +41,14 @@ and runnable from IDE and Gradle `--tests` filters, exactly as with Java `@Neste
 Each DSL scope function (`spec`, `feature`, `scenario`, `journey`, `describe`) registers its
 own container descriptor with child descriptors underneath.
 
+**Known limitation (documented, not fulfilled):** the descriptor tree gives the IDE run tree and
+the arete report the same granularity as Java, but the scopes are not *selectable* for execution.
+Unlike Java `@Nested` classes (real classes, hence addressable by Gradle `--tests` and IDE run
+markers), all Kotlin DSL scopes live in one class constructor lambda, so Gradle `--tests` filters
+at the spec-class level only and the IDE can only run a whole spec class (the `@Test` marker on
+`Spec` provides the class-level gutter icon). Individual scenarios/features/journeys cannot be
+executed on their own. See `arete-ktx/Readme.md` "Known Limitations".
+
 **Alternatives considered:**
 - *Single `@TestFactory` per spec* — rejected: produces a flat test list, breaking individual
   selection.
