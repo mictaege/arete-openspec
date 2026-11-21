@@ -26,6 +26,9 @@ context: |
     com.gradle.plugin-publish for the plugin; credentials come from Gradle properties/env,
     never hardcoded or committed.
   - All four repos share one version number per release.
+  - Java/Kotlin parity: any new feature in the Java annotation API (arete) must be checked for a
+    Kotlin DSL equivalent (arete-ktx) and vice versa; the parity decision is recorded in the
+    OpenSpec change (see specs/family/spec.md).
   - Dependency direction is arete <- arete-ktx <- arete-gradle <- arete-gradle-test; arete's
     public annotation API is compatibility-sensitive because arete-gradle reads it to build
     reports.

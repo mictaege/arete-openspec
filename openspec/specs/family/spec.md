@@ -24,6 +24,25 @@ not published). Dependencies SHALL only point `arete-ktx` → `arete`, `arete-gr
   `includeBuild("../arete-gradle")` in its `settings.gradle.kts`, so `./gradlew test` there
   exercises the local code without publishing
 
+### Requirement: Java/Kotlin parity for features
+
+Any new feature or functionality in the Java annotation API of `arete` SHALL be checked for a
+Kotlin DSL equivalent in `arete-ktx`, and vice versa: a new Java annotation (e.g. a new
+`@Spec`-level annotation) SHALL be evaluated for a corresponding DSL element in `arete-ktx`, and
+a new Kotlin DSL element SHALL be evaluated for a Java annotation equivalent. The parity decision
+(implement / consciously skip with rationale) SHALL be recorded in the OpenSpec change of the
+affected repos.
+
+#### Scenario: New Java annotation is added
+- **WHEN** a new annotation is added to `arete` (e.g. a new metadata annotation)
+- **THEN** the change records whether `arete-ktx` needs a matching DSL element, and if so it is
+  implemented in the same release
+
+#### Scenario: New Kotlin DSL element is added
+- **WHEN** a new builder/element is added to the `arete-ktx` DSL
+- **THEN** the change records whether the Java API needs a matching annotation, and if so it is
+  added to `arete` in the same release
+
 ### Requirement: Shared versioning and release flow
 
 All four repos SHALL carry the same version per release (e.g. `2026.8`). Releases SHALL flow via
