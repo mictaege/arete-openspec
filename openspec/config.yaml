@@ -1,19 +1,23 @@
 schema: spec-driven
 
 context: |
-  Store for the arete family — three GitHub repos under github.com/mictaege, developed together
+  Store for the arete family — four GitHub repos under github.com/mictaege, developed together
   on branch `develop` and released together from `release/YYYY.N` branches (merged to `master`
   and tagged, e.g. 2026.8):
 
     - ~/projects/arete            core library: JUnit 6 BDD extension (@Spec/@Scenario/...),
                                    Java, published to Maven Central as io.github.mictaege:arete
+    - ~/projects/arete-ktx        Kotlin DSL for arete specs on a custom JUnit Platform engine
+                                   (arete-ktx), published to Maven Central as
+                                   io.github.mictaege:arete-ktx
     - ~/projects/arete-gradle     Gradle reporting plugin for arete specs, Kotlin, published to
                                    Maven Central (io.github.mictaege:arete-gradle) and the Gradle
                                    Plugin Portal (io.github.mictaege.arete)
     - ~/projects/arete-gradle-test sample/integration consumer (travel_agency demo specs);
-                                   NOT published; includes ../arete and ../arete-gradle via
-                                   includeBuild (settings.gradle.kts), so plugin/core changes are
-                                   exercised end-to-end locally without publishing
+                                   NOT published; includes ../arete, ../arete-ktx and
+                                   ../arete-gradle via includeBuild (settings.gradle.kts), so
+                                   plugin/core changes are exercised end-to-end locally without
+                                   publishing
 
   Shared conventions (also in ~/.vibe/AGENTS.md and each repo's AGENTS.md / openspec context):
   - Build/test only via each repo's Gradle wrapper (./gradlew); JUnit Jupiter is the test
@@ -21,9 +25,10 @@ context: |
   - Publishing via org.jreleaser (Maven Central, group io.github.mictaege) and
     com.gradle.plugin-publish for the plugin; credentials come from Gradle properties/env,
     never hardcoded or committed.
-  - All three repos share one version number per release.
-  - Dependency direction is arete <- arete-gradle <- arete-gradle-test; arete's public annotation
-    API is compatibility-sensitive because arete-gradle reads it to build reports.
+  - All four repos share one version number per release.
+  - Dependency direction is arete <- arete-ktx <- arete-gradle <- arete-gradle-test; arete's
+    public annotation API is compatibility-sensitive because arete-gradle reads it to build
+    reports.
 
   How to work with this store: run OpenSpec commands with `--store arete` for family-wide
   planning (e.g. `openspec list --store arete`, `openspec new change <id> --store arete`,

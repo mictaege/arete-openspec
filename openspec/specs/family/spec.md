@@ -2,20 +2,21 @@
 
 ## Purpose
 
-The arete family is three GitHub repositories under `github.com/mictaege` that are developed and
-released together: the `arete` core library, the `arete-gradle` reporting plugin, and the
-`arete-gradle-test` consumer/demo project. This store (`openspec store arete`, at
-`~/openspec/arete`) holds family-level planning; each repo keeps its own `openspec/` root for
-repo-local specs and changes.
+The arete family is four GitHub repositories under `github.com/mictaege` that are developed and
+released together: the `arete` core library, the `arete-ktx` Kotlin DSL artifact, the
+`arete-gradle` reporting plugin, and the `arete-gradle-test` consumer/demo project. This store
+(`openspec store arete`, at `~/openspec/arete`) holds family-level planning; each repo keeps its
+own `openspec/` root for repo-local specs and changes.
 
 ## Requirements
 
 ### Requirement: Three repos with a one-way dependency direction
 
-The family SHALL consist of exactly `arete` (core JUnit 6 BDD extension library),
-`arete-gradle` (Gradle HTML report plugin depending on `arete`), and `arete-gradle-test`
-(sample/integration consumer, not published). Dependencies SHALL only point
-`arete-gradle` → `arete` and `arete-gradle-test` → both; `arete` SHALL NOT depend on the others.
+The family SHALL consist of exactly `arete` (core JUnit 6 BDD extension library), `arete-ktx`
+(Kotlin DSL artifact depending on `arete`), `arete-gradle` (Gradle HTML report plugin depending on
+`arete` and reading `arete-ktx` metadata), and `arete-gradle-test` (sample/integration consumer,
+not published). Dependencies SHALL only point `arete-ktx` → `arete`, `arete-gradle` → `arete` +
+`arete-ktx`, and `arete-gradle-test` → all; `arete` SHALL NOT depend on the others.
 
 #### Scenario: Consumer validates plugin changes locally
 - **WHEN** a change is made in `arete` or `arete-gradle`
@@ -25,7 +26,7 @@ The family SHALL consist of exactly `arete` (core JUnit 6 BDD extension library)
 
 ### Requirement: Shared versioning and release flow
 
-All three repos SHALL carry the same version per release (e.g. `2026.8`). Releases SHALL flow via
+All four repos SHALL carry the same version per release (e.g. `2026.8`). Releases SHALL flow via
 a `release/YYYY.N` branch merged into `master` and tagged; `develop` is the integration branch.
 
 #### Scenario: Cross-repo feature lands in one release
