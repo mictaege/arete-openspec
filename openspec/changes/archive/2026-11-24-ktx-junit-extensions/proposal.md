@@ -12,13 +12,15 @@ callbacks, `@Timeout`-like wrappers).
 
 ## What Changes
 
-- New DSL element(s) in `arete-ktx` available in every container scope (`spec`, `feature`,
-  `scenario`, `describe`, `journey`), e.g. `extensions(vararg ext: Extension)` /
+- New DSL elements in `arete-ktx` available in every container scope (`spec`, `feature`,
+  `scenario`, `describe`, `journey`): `extendWith(vararg KClass<out Extension>)` /
   `registerExtension(ext: Extension)` mirroring `@ExtendWith` / `@RegisterExtension`.
 - The `AreteKtxEngine` invokes the registered extensions' lifecycle callbacks around the
-  corresponding node execution (before/after container, before/after step, exception
-  handling), using a minimal `ExtensionContext`-like facade backed by the `KtxNode`/
-  `TestDescriptor`.
+  corresponding node execution (before/after container, before/after step, `TestWatcher`,
+  exception handling), using a minimal `ExtensionContext` facade backed by the `KtxNode`/
+  `TestDescriptor` that also supports `publishFile`.
+- The legacy `screenshots()` DSL is removed; screenshots are taken via
+  `registerExtension(ScreenshotExtension(taker))`.
 - Existing behavior is unchanged when no extensions are registered.
 
 ## Capabilities
